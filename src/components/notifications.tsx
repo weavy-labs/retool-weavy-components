@@ -119,7 +119,7 @@ export const WeavyNotifications: FC = () => {
   const { modeClassName } = useThemeMode()
   const { themeStyles } = useThemeStyles()
   const { weavyUrl } = useWeavyUrl()
-  const { tokenFactory } = useTokenFactory()
+  const { tokenFactory, accessToken } = useTokenFactory()
   const { weavyOptions } = useWeavyOptions()
 
   const [_linkData, setLinkData] = Retool.useStateObject({
@@ -154,7 +154,7 @@ export const WeavyNotifications: FC = () => {
     url: weavyUrl,
     tokenFactory,
     ...weavyOptions
-  })
+  }, [accessToken])
 
   const handleLink = async (e: WyLinkEventType) => {
     const appType = e.detail.app?.type
