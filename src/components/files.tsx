@@ -6,12 +6,15 @@ import {
   useWeavyOptions,
   useWeavyUrl
 } from '../properties/weavy'
-
-import '../styles.css'
 import { useUid, useName } from '../properties/uid'
 import { useThemeMode, useThemeStyles } from '../properties/theme'
 import { useFilesFeatures } from '../properties/features'
-import { useNavigationEventCallback, useNotificationProps } from '../properties/notifications'
+import {
+  useNavigationEventCallback,
+  useNotificationProps
+} from '../properties/notifications'
+import { usePreviewEvent } from '../properties/preview'
+import '../styles.css'
 
 export const WeavyFiles: FC = () => {
   const { name } = useName()
@@ -24,12 +27,16 @@ export const WeavyFiles: FC = () => {
   const { tokenFactory, accessToken } = useTokenFactory()
   const { weavyOptions } = useWeavyOptions()
   const { navigationRefCallBack } = useNavigationEventCallback([uid])
+  const { handlePreview } = usePreviewEvent()
 
-  const weavy = useWeavy({
-    url: weavyUrl,
-    tokenFactory,
-    ...weavyOptions
-  }, [accessToken])
+  const weavy = useWeavy(
+    {
+      url: weavyUrl,
+      tokenFactory,
+      ...weavyOptions
+    },
+    [accessToken]
+  )
 
   return (
     <WyFiles
@@ -38,6 +45,7 @@ export const WeavyFiles: FC = () => {
       className={modeClassName}
       style={themeStyles}
       ref={navigationRefCallBack}
+      onWyPreviewOpen={handlePreview}
       {...notifications}
       {...features}
     />

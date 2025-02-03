@@ -1,6 +1,6 @@
 import { Retool } from '@tryretool/custom-component-support'
-import { AppWithPageType } from '../components/notifications'
 import { useCallback } from 'react'
+import { AppWithSourceMetadataType } from '@weavy/uikit-react/dist/types/types'
 
 export type OpenAppParameters = {
   pageName?: string
@@ -72,7 +72,7 @@ export const useNotificationProps = () => {
   }
 }
 
-type WyAppRef = HTMLElement & { whenApp: () => Promise<AppWithPageType> } | null
+type WyAppRef = HTMLElement & { whenApp: () => Promise<AppWithSourceMetadataType> } | null
 
 export const useNavigationEventCallback = (deps: React.DependencyList) => {
   const triggerNotification = Retool.useEventCallback({
@@ -82,8 +82,8 @@ export const useNavigationEventCallback = (deps: React.DependencyList) => {
   const navigationRefCallBack = useCallback((weavyComponent: WyAppRef) => {
     if (weavyComponent) {
       requestAnimationFrame(() => {
-        weavyComponent.whenApp().then((app: AppWithPageType) => {
-          if (!app.metadata?.page) {
+        weavyComponent.whenApp().then((app: AppWithSourceMetadataType) => {
+          if (!app.metadata?.source_name || !app.metadata?.source_url || !app.metadata?.source_data) {
             //console.debug("Triggering SetWeavyNavigation", app.uid)
             triggerNotification()
           }

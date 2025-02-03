@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { type FC } from 'react'
 import { useWeavy, WyMessenger } from '@weavy/uikit-react'
 import {
@@ -12,6 +12,7 @@ import { useThemeMode, useThemeStyles } from '../properties/theme'
 import { useMessengerFeatures } from '../properties/features'
 import { Retool } from '@tryretool/custom-component-support'
 import { useName } from '../properties/uid'
+import { usePreviewEvent } from '../properties/preview'
 
 export const WeavyMessenger: FC = () => {
   const { name } = useName()
@@ -26,6 +27,7 @@ export const WeavyMessenger: FC = () => {
   const { weavyUrl } = useWeavyUrl()
   const { tokenFactory, accessToken } = useTokenFactory()
   const { weavyOptions } = useWeavyOptions()
+  const { handlePreview } = usePreviewEvent()
 
   const weavy = useWeavy({
     url: weavyUrl,
@@ -39,6 +41,7 @@ export const WeavyMessenger: FC = () => {
       bot={bot}
       className={modeClassName}
       style={themeStyles}
+      onWyPreviewOpen={handlePreview}
       {...features}
     />
   )

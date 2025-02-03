@@ -11,7 +11,7 @@ const ora = require('ora')
 const inquirer = require('inquirer')
 
 const weavyComponents = require('../weavy-components.json')
-const demoApp = require('../demo/weavy-components-basic-layout.json')
+const demoApp = require('../demo/weavy-components-multipage-layout.json')
 const authenticationWorkflowData = require('../workflows/WeavyAuthentication.json')
 const pageNavigationWorkflowData = require('../workflows/WeavyPageNavigation.json')
 
@@ -20,8 +20,8 @@ const revUuidRegex = /"collectionRevisionUuid","(?<revUuid>[0-9a-f\-]+)"/gm
 const workflowRegex = /"workflowId","(?<workflowId>[0-9a-f\-]+)"/gm
 const envRegex = /{{ window\.WEAVY_URL[^\}]*}}/gm
 
-const replaceAuthenticationUuid = "c4d21a4a-d0fc-4d71-960a-e6ffc2fb1bd5"
-const replacePageNavigationUuid = "44a1e25a-e5fe-4458-8d1a-d518fe438099"
+const replaceAuthenticationUuid = "42958e7e-9935-4601-bd93-c9383cebfdc5"
+const replacePageNavigationUuid = "e9fbbdbc-9757-48c2-a515-b9b8ddff95fc"
 
 async function createWeavyApp(appName, credentials) {
   const { workflows } = await getWorkflowsAndFolders(credentials)
@@ -137,5 +137,5 @@ async function createWeavyApp(appName, credentials) {
 }
 
 getAndVerifyCredentialsWithRetoolDB().then((credentials) =>
-  createWeavyApp('Weavy Components - Basic Layout', credentials)
+  createWeavyApp('Weavy Components - Multipage Layout', credentials)
 )

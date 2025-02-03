@@ -2,9 +2,8 @@ import React, { useEffect } from 'react'
 import { type FC } from 'react'
 import { Retool } from '@tryretool/custom-component-support'
 import {
-  ConversationTypes,
+  MessengerTypes,
   useWeavy,
-  WeavyTypes,
   WyLinkEventType,
   WyNotifications,
   WyNotificationsEventType
@@ -15,8 +14,6 @@ import {
   useWeavyOptions,
   useWeavyUrl
 } from '../properties/weavy'
-
-import '../styles.css'
 import { useOptionalUid } from '../properties/uid'
 import {
   OpenAppParameters,
@@ -26,12 +23,7 @@ import {
   useNotificationTitle
 } from '../properties/notifications'
 import { useThemeMode, useThemeStyles } from '../properties/theme'
-
-export type AppWithPageType = WeavyTypes.AppType & {
-  metadata?: WeavyTypes.AppType['metadata'] & {
-    page?: string
-  }
-}
+import '../styles.css'
 
 export const WeavyNotificationEvents: FC = () => {
   const { tokenFactory } = useTokenFactory()
@@ -48,11 +40,14 @@ export const WeavyNotificationEvents: FC = () => {
 
   const triggerNotification = Retool.useEventCallback({ name: 'notification' })
 
-  const weavy = useWeavy({
-    url: weavyUrl,
-    tokenFactory,
-    notificationEvents: true
-  }, [accessToken])
+  const weavy = useWeavy(
+    {
+      url: weavyUrl,
+      tokenFactory,
+      notificationEvents: true
+    },
+    [accessToken]
+  )
 
   const updateNotificationCount = async () => {
     if (weavy) {
@@ -77,6 +72,7 @@ export const WeavyNotificationEvents: FC = () => {
       }
     }
   }
+
   const handleNotifications = (e: WyNotificationsEventType) => {
     if (e.detail.notification && e.detail.action === 'notification_created') {
       // Only show notifications when a new notification is received
@@ -102,11 +98,11 @@ export const WeavyNotificationEvents: FC = () => {
       weavy.notificationEvents = true
 
       // Add a realtime notification event listener
-      weavy.host?.addEventListener('wy:notifications', handleNotifications)
+      weavy.host?.addEventListener('wy-notifications', handleNotifications)
 
       return () => {
         // Unregister the event listener when the component is unmounted
-        weavy.host?.removeEventListener('wy:notifications', handleNotifications)
+        weavy.host?.removeEventListener('wy-notifications', handleNotifications)
       }
     }
   }, [weavy, weavyUrl, accessToken])
@@ -144,68 +140,70 @@ export const WeavyNotifications: FC = () => {
       'The app navigation params from the most recent link event app.'
   })
 
+  const [_navigateExternalUrl, setNavigateExternalUrl] = Retool.useStateString({
+    name: 'navigateExternalUrl',
+    initialValue: '',
+    inspector: 'hidden',
+    description:
+      'The url to an external source from the most recent link event.'
+  })
+
   const triggerNavigate = Retool.useEventCallback({ name: 'navigate' })
 
   // Reserved for future use
   //const triggerLink = Retool.useEventCallback({ name: 'link' })
   //const triggerMessenger = Retool.useEventCallback({ name: 'open-messenger' })
 
-  const weavy = useWeavy({
-    url: weavyUrl,
-    tokenFactory,
-    ...weavyOptions
-  }, [accessToken])
+  const weavy = useWeavy(
+    {
+      url: weavyUrl,
+      tokenFactory,
+      ...weavyOptions
+    },
+    [accessToken]
+  )
 
   const handleLink = async (e: WyLinkEventType) => {
-    const appType = e.detail.app?.type
-    let appUid = e.detail.app?.uid
+    const appType = e.detail.link.app?.type
 
     setLinkData(e.detail)
 
-    // Check if the appType guid exists in the ConversationTypes map
-    if (ConversationTypes.has(appType as string)) {
+    // Check if the appType guid exists in the MessengerTypes map
+    if (appType && MessengerTypes.has(appType)) {
       // Show the messenger
       //triggerMessenger()
-    } else if (appUid && weavy) {
+    } else if (e.detail.source_name === 'retool' && e.detail.source_data) {
       // Show a contextual block by navigation to another page
+      let pageData: PageDataType, pageParams: OpenAppParameters
+      try {
+        pageData = JSON.parse(e.detail.source_data)
+        const { appUuid, hashParams, pageName, queryParams } = pageData
 
-      // First we much fetch the app metadata from the server
-      const response = await weavy.fetch(`/api/apps/${appUid}`)
-      if (!response.ok) {
-        console.error("Error fetching app")
-        return;
-      }
-
-      const { uid, metadata } = (await response.json()) as AppWithPageType
-
-      if (uid) {
-        if (metadata?.page) {
-          let pageData: PageDataType, pageParams: OpenAppParameters
-          try {
-            pageData = JSON.parse(metadata.page)
-            const { appUuid, hashParams, pageName, queryParams } = pageData
-
-            pageParams = {
-              pageName,
-              hashParams,
-              queryParams
-            }
-            //console.log("setting page params", appUuid, pageParams)
-
-            setNavigateAppUuid(appUuid ?? '')
-            setNavigateParams(pageParams ?? {})
-          } catch {
-            setNavigateAppUuid('')
-            setNavigateParams({})
-          }
-        } else {
-          setNavigateAppUuid('')
-          setNavigateParams({})
+        pageParams = {
+          pageName,
+          hashParams,
+          queryParams
         }
+        //console.log("setting page params", appUuid, pageParams)
 
-        triggerNavigate()
+        setNavigateAppUuid(appUuid ?? '')
+        setNavigateParams(pageParams ?? {})
+        setNavigateExternalUrl('')
+      } catch {
+        setNavigateAppUuid('')
+        setNavigateParams({})
+        setNavigateExternalUrl('')
       }
+    } else {
+      if (e.detail.source_url) {
+        // Navigate to external resource
+        setNavigateExternalUrl(e.detail.source_url)
+      }
+      setNavigateAppUuid('')
+      setNavigateParams({})
     }
+
+    triggerNavigate()
 
     //triggerLink()
   }
