@@ -1,6 +1,6 @@
 {
   "name": "weavy-react-components",
-  "version": "26.0.2",
+  "version": "27.0.0",
   "private": true,
   "scripts": {
     "login": "retool login && retool-ccl login",
@@ -16,7 +16,7 @@
     "deploy": "retool-ccl deploy"
   },
   "dependencies": {
-    "@weavy/uikit-react": "^26.0.2",
+    "@weavy/uikit-react": "^27.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
@@ -36,15 +36,15 @@
     ]
   },
   "devDependencies": {
-    "@tryretool/custom-component-support": "^1.1.0",
-    "@types/react": "^18.3.14",
-    "@typescript-eslint/eslint-plugin": "^8.18.0",
-    "@typescript-eslint/parser": "^8.18.0",
+    "@tryretool/custom-component-support": "^1.5.0",
+    "@types/react": "^18.3.20",
+    "@typescript-eslint/eslint-plugin": "^8.28.0",
+    "@typescript-eslint/parser": "^8.28.0",
     "dotenv": "^16.4.7",
-    "eslint": "^9.16.0",
-    "eslint-plugin-react": "^7.37.2",
+    "eslint": "^9.23.0",
+    "eslint-plugin-react": "^7.37.4",
     "postcss-modules": "^6.0.1",
-    "prettier": "^3.4.2",
+    "prettier": "^3.5.3",
     "retool-cli": "^1.0.29"
   },
   "overrides": {

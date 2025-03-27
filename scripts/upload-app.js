@@ -20,8 +20,8 @@ const revUuidRegex = /"collectionRevisionUuid","(?<revUuid>[0-9a-f\-]+)"/gm
 const workflowRegex = /"workflowId","(?<workflowId>[0-9a-f\-]+)"/gm
 const envRegex = /{{ window\.WEAVY_URL[^\}]*}}/gm
 
-const replaceAuthenticationUuid = "42958e7e-9935-4601-bd93-c9383cebfdc5"
-const replacePageNavigationUuid = "e9fbbdbc-9757-48c2-a515-b9b8ddff95fc"
+const replaceAuthenticationUuid = "604af630-a1c0-456a-9649-1e77812b52b7"
+const replacePageNavigationUuid = "f53c2aba-1e68-43f3-b4a3-1d6e5fa4a660"
 
 async function createWeavyApp(appName, credentials) {
   const { workflows } = await getWorkflowsAndFolders(credentials)

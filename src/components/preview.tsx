@@ -21,7 +21,7 @@ export const WeavyPreview: FC = () => {
 
   const [previewOpen, setPreviewOpen] = Retool.useStateBoolean({
     name: 'previewOpen',
-    initialValue: false,
+    initialValue: true,
     inspector: 'checkbox',
     description: 'Whether the preview is shown'
   })
@@ -82,7 +82,7 @@ export const WeavyPreview: FC = () => {
     <WyComponent
       className={modeClassName}
       style={themeStyles}
-      hasFeatures={previewDetail.hasFeatures}
+      features={previewDetail.features}
       app={previewDetail.app}
     >
       <WeavyComponents.WyPreview

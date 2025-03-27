@@ -27,5 +27,29 @@ export const useOptionalUid = () => {
     description: 'Optional uid for filtering.'
   })
 
-  return { uid }
+  return { uid: uid || undefined }
+}
+
+export const useAutoUid = () => {
+  const [enableAutoUid] = Retool.useStateBoolean({
+    name: 'enableAutoUid',
+    label: "Append bot and user to UID",
+    initialValue: true,
+    inspector: 'checkbox',
+    description: 'Automatically append user and bot to the uid.'
+  })
+
+  return { enableAutoUid }
+}
+
+export const useAppIdEvent = () => {
+  const [_appId, setAppId] = Retool.useStateNumber({
+    name: 'appId',
+    inspector: 'hidden',
+    description: 'The app id of the current app.'
+  })
+
+  const triggerAppId = Retool.useEventCallback({ name: 'App' })
+
+  return { setAppId, triggerAppId }
 }
