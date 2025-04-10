@@ -1,0 +1,29 @@
+name: Deploy Retool Components
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Environment'
+        type: string
+        required: true
+      email:
+        type: string
+        description: 'Retool email'
+        required: true
+      password:
+        type: string
+        description: 'Retool password'
+        required: true
+      token:
+        type: string
+        description: 'Retool API key'
+        required: true        
+      replace:
+        type: boolean
+        description: 'Replace existing?'        
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: echo "Deploying to ${{ inputs.environment }} for ${{ inputs.email }}..."
