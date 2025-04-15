@@ -1,22 +1,16 @@
 {
   "name": "weavy-react-components",
-  "version": "27.1.0",
+  "version": "27.1.1",
   "private": true,
   "scripts": {
     "login": "retool login && retool-ccl login",
-    "create:demo": "npm run create:weavy && npm run init:demo-app",
-    "create:weavy": "npm run init:js-url && npm run init:resources && npm run init:workflows && npm run init:components",
-    "init:resources": "node scripts/init-resources.js",
-    "init:config-variables": "node scripts/init-config-variables.js",
-    "init:js-url": "node scripts/init-url.js",
-    "init:workflows": "node scripts/upload-workflows.js",
-    "init:components": "node scripts/init-components.js",
-    "init:demo-app": "node scripts/upload-app.js",
+    "create:demo": "node scripts/create-demo.js",
+    "create:weavy": "node scripts/create-weavy.js",
     "dev": "retool-ccl dev",
     "deploy": "retool-ccl deploy"
   },
   "dependencies": {
-    "@weavy/uikit-react": "^27.1.0",
+    "@weavy/uikit-react": "^27.1.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
@@ -36,10 +30,12 @@
     ]
   },
   "devDependencies": {
-    "@tryretool/custom-component-support": "^1.5.0",
+    "@actions/core": "^1.11.1",
+    "@tryretool/custom-component-support": "^1.7.2",
     "@types/react": "^18.3.20",
     "@typescript-eslint/eslint-plugin": "^8.28.0",
     "@typescript-eslint/parser": "^8.28.0",
+    "commander": "^13.1.0",
     "dotenv": "^16.4.7",
     "eslint": "^9.23.0",
     "eslint-plugin-react": "^7.37.4",

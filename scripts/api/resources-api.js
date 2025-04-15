@@ -1,22 +1,19 @@
-require('dotenv').config()
-
-const {
-  getAndVerifyCredentialsWithRetoolDB
-} = require('retool-cli/lib/utils/credentials')
 const {
   getRequest,
   postRequest,
   deleteRequest
 } = require('retool-cli/lib/utils/networking')
-const package = require('../package.json')
-const fs = require('node:fs')
 const chalk = require('chalk')
 const ora = require('ora')
-const inquirer = require('inquirer')
 const axios = require('axios')
 
+/// RESOURCES
+
 const WEAVY_API_NAME = 'WeavyAPI'
+exports.WEAVY_API_NAME = WEAVY_API_NAME
+
 const WEAVY_API_DISPLAY_NAME = 'Weavy API'
+exports.WEAVY_API_DISPLAY_NAME = WEAVY_API_DISPLAY_NAME
 
 function getResourcePayloadData(environmentUrl, apiKey, folderId) {
   return {
@@ -36,6 +33,7 @@ function getResourcePayloadData(environmentUrl, apiKey, folderId) {
     description: 'Weavy Web API using weavy.io environment'
   }
 }
+exports.getResourcePayloadData = getResourcePayloadData
 
 async function testConnection(connectionPayload, credentials) {
   const spinner = ora('Testing resource connection').start()
@@ -61,6 +59,7 @@ async function testConnection(connectionPayload, credentials) {
 
   return connectionOk
 }
+exports.testConnection = testConnection
 
 async function createResource(url, apiKey, folderId, credentials) {
   const spinner = ora('Creating Weavy API resource').start()
@@ -84,6 +83,7 @@ async function createResource(url, apiKey, folderId, credentials) {
 
   return resource
 }
+exports.createResource = createResource
 
 async function updateResource(name, url, apiKey, folderId, credentials) {
   const spinner = ora('Updating Weavy API resource').start()
@@ -111,6 +111,7 @@ async function updateResource(name, url, apiKey, folderId, credentials) {
 
   return resource
 }
+exports.updateResource = updateResource
 
 async function getResources(credentials) {
   const spinner = ora('Getting resources').start()
@@ -132,6 +133,7 @@ async function getResources(credentials) {
 
   return resources
 }
+exports.getResources = getResources
 
 async function getResourceByName(name, credentials) {
   const spinner = ora(`Getting resource ${name}`).start()
@@ -154,6 +156,7 @@ async function getResourceByName(name, credentials) {
 
   return resource
 }
+exports.getResourceByName = getResourceByName
 
 function getResourceByDisplayName(displayName, resources) {
   const resource = resources?.resources?.find(
@@ -162,6 +165,7 @@ function getResourceByDisplayName(displayName, resources) {
 
   return resource
 }
+exports.getResourceByDisplayName = getResourceByDisplayName
 
 function getResourceRootFolder(resources) {
   const rootFolder = resources?.resourceFolders?.find(
@@ -174,80 +178,4 @@ function getResourceRootFolder(resources) {
 
   return rootFolder
 }
-
-getAndVerifyCredentialsWithRetoolDB().then(async (credentials) => {
-  const resources = await getResources(credentials)
-
-  let existingResource,
-    updateExisting = false
-
-  existingResource = getResourceByDisplayName(WEAVY_API_DISPLAY_NAME, resources)
-
-  if (!existingResource) {
-    existingResource = await getResourceByName(WEAVY_API_NAME, credentials)
-  }
-
-  if (existingResource) {
-    console.log(`Found existing resource API: ${chalk.blue(existingResource.displayName)}`)
-    const replace = await inquirer.prompt([
-      {
-        name: 'confirm',
-        message: 'Do you want to update the existing resource '.concat(
-          existingResource.displayName,
-          '?'
-        ),
-        type: 'confirm',
-        default: false
-      }
-    ])
-
-    if (replace.confirm) {
-      //await deleteConfigVariable(existingConfigVar, credentials)
-      updateExisting = true
-    }
-  }
-
-  if (existingResource && !updateExisting) {
-    const connectionPayload = {
-      changeset: {},
-      environment: 'production',
-      resourceName: WEAVY_API_NAME
-    }
-
-    await testConnection(connectionPayload, credentials)
-  } else {
-    if (!process.env.WEAVY_URL) {
-      console.warn('No WEAVY_URL configured in .env')
-    } else if (!process.env.WEAVY_APIKEY) {
-      console.warn('No WEAVY_APIKEY configured in .env')
-    } else {
-      const rootFolder = getResourceRootFolder(resources)
-
-      const connectionPayload = {
-        changeset: getResourcePayloadData(process.env.WEAVY_URL, process.env.WEAVY_APIKEY, rootFolder.id),
-        environment: 'production'
-      }
-
-      const connectionOk = await testConnection(connectionPayload, credentials)
-
-      if (connectionOk) {
-        if (updateExisting) {
-          await updateResource(
-            existingResource.name,
-            process.env.WEAVY_URL,
-            process.env.WEAVY_APIKEY,
-            rootFolder.id,
-            credentials
-          )
-        } else {
-          await createResource(
-            process.env.WEAVY_URL,
-            process.env.WEAVY_APIKEY,
-            rootFolder.id,
-            credentials
-          )
-        }
-      }
-    }
-  }
-})
+exports.getResourceRootFolder = getResourceRootFolder

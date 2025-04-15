@@ -1,29 +1,39 @@
-require('dotenv').config()
-
-const {
-  getAndVerifyCredentialsWithRetoolDB
-} = require('retool-cli/lib/utils//credentials')
 const { postRequest } = require('retool-cli/lib/utils/networking')
 const { getWorkflowsAndFolders } = require('retool-cli/lib/utils/workflows')
 const { getAppsAndFolders, deleteApp } = require('retool-cli/lib/utils/apps')
+
 const chalk = require('chalk')
 const ora = require('ora')
-const inquirer = require('inquirer')
+const axios = require('axios')
 
-const weavyComponents = require('../weavy-components.json')
-const demoApp = require('../demo/weavy-components-multipage-layout.json')
-const authenticationWorkflowData = require('../workflows/WeavyAuthentication.json')
-const pageNavigationWorkflowData = require('../workflows/WeavyPageNavigation.json')
+/// DEMO APP
+
+const weavyComponents = require('../../weavy-components.json')
+const demoApp = require('../../demo/weavy-components-multipage-layout.json')
+const authenticationWorkflowData = require('../../workflows/WeavyAuthentication.json')
+const pageNavigationWorkflowData = require('../../workflows/WeavyPageNavigation.json')
 
 const uuidRegex = /"collectionUuid","(?<uuid>[0-9a-f\-]+)"/gm
 const revUuidRegex = /"collectionRevisionUuid","(?<revUuid>[0-9a-f\-]+)"/gm
 const workflowRegex = /"workflowId","(?<workflowId>[0-9a-f\-]+)"/gm
 const envRegex = /{{ window\.WEAVY_URL[^\}]*}}/gm
 
-const replaceAuthenticationUuid = "604af630-a1c0-456a-9649-1e77812b52b7"
-const replacePageNavigationUuid = "f53c2aba-1e68-43f3-b4a3-1d6e5fa4a660"
+const replaceAuthenticationUuid = '604af630-a1c0-456a-9649-1e77812b52b7'
+const replacePageNavigationUuid = 'f53c2aba-1e68-43f3-b4a3-1d6e5fa4a660'
 
-async function createWeavyApp(appName, credentials) {
+const DEMO_APP_NAME = 'Weavy Components - Multipage Layout'
+exports.DEMO_APP_NAME = DEMO_APP_NAME
+
+async function getExistingApp(credentials, appName = DEMO_APP_NAME) {
+  const appsAndFolders = await getAppsAndFolders(credentials)
+
+  let existingApp = appsAndFolders.apps.find((app) => app.name === appName)
+
+  return existingApp
+}
+exports.getExistingApp = getExistingApp
+
+async function createWeavyApp(credentials, appName = DEMO_APP_NAME, WEAVY_URL) {
   const { workflows } = await getWorkflowsAndFolders(credentials)
 
   const weavyAuthenticationWorkflow = workflows.find(
@@ -69,13 +79,12 @@ async function createWeavyApp(appName, credentials) {
     return `"workflowId","${workflowId}"`
   })
 
-
   // Patch environment variable
-  if (process.env.WEAVY_URL) {
+  if (WEAVY_URL) {
     // Defaulted value
     appState = appState.replace(
       envRegex,
-      `{{ window.WEAVY_URL || retoolContext.configVars?.WEAVY_URL || \\"${process.env.WEAVY_URL}\\" }}`
+      `{{ window.WEAVY_URL || retoolContext.configVars?.WEAVY_URL || \\"${WEAVY_URL}\\" }}`
     )
   } else {
     appState = appState.replace(
@@ -84,27 +93,9 @@ async function createWeavyApp(appName, credentials) {
     )
   }
 
-  const appsAndFolders = await getAppsAndFolders(credentials)
+  let app = await getExistingApp(credentials, appName)
 
-  let existingApp = appsAndFolders.apps.find((app) => app.name === appName)
-
-  if (existingApp) {
-    const replace = await inquirer.prompt([
-      {
-        name: 'confirm',
-        message: 'Do you want to replace the existing '.concat(appName, '?'),
-        type: 'confirm',
-        default: false
-      }
-    ])
-
-    if (replace.confirm) {
-      await deleteApp(appName, credentials, false)
-      existingApp = null
-    }
-  }
-
-  if (!existingApp) {
+  if (!app) {
     const spinner = ora('Creating App').start()
 
     const createAppResult = await postRequest(
@@ -125,17 +116,16 @@ async function createWeavyApp(appName, credentials) {
       console.log(createAppResult.data)
       process.exit(1)
     } else {
-      console.log('Successfully created a Weavy demo app. 🎉')
-      console.log(
-        `${chalk.bold('View in browser:')} ${credentials.origin}/editor/${
-          page.uuid
-        }`
-      )
-      return page
+      app = page
     }
   }
-}
-
-getAndVerifyCredentialsWithRetoolDB().then((credentials) =>
-  createWeavyApp('Weavy Components - Multipage Layout', credentials)
-)
+  const appUrl = `${credentials.origin}/editor/${
+    app.uuid
+  }`
+  console.log('Successfully created a Weavy demo app. 🎉')
+  console.log(
+    `${chalk.bold('View in browser:')} ${appUrl}`
+  )
+  return { app, appUrl }
+} 
+exports.createWeavyApp = createWeavyApp

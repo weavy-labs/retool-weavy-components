@@ -1,5 +1,7 @@
 require('dotenv').config()
 
+/** NOT USED */
+
 const {
   getAndVerifyCredentialsWithRetoolDB
 } = require('retool-cli/lib/utils/credentials')
@@ -8,7 +10,7 @@ const {
   postRequest,
   deleteRequest
 } = require('retool-cli/lib/utils/networking')
-const package = require('../package.json')
+const package = require('../../package.json')
 const fs = require('node:fs')
 const chalk = require('chalk')
 const ora = require('ora')

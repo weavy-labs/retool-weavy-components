@@ -1,20 +1,16 @@
-// https://mindroutedev.retool.com/api/organization/admin/libraries
-
-require('dotenv').config()
-
-const {
-  getAndVerifyCredentialsWithRetoolDB
-} = require('retool-cli/lib/utils/credentials')
 const {
   getRequest,
+  postRequest,
   deleteRequest
 } = require('retool-cli/lib/utils/networking')
 const chalk = require('chalk')
 const ora = require('ora')
-const inquirer = require('inquirer')
 const axios = require('axios')
 
-const jsRegex = /window\.WEAVY_URL\s*=\s*(?<url>[^\n;]*);?/gm
+/// URLS
+
+const jsWeavyUrlRegex = /window\.WEAVY_URL\s*=\s*(?<url>[^\n;]*);?/gm
+exports.jsWeavyUrlRegex = jsWeavyUrlRegex
 
 async function getOrgJS(credentials) {
   const spinner = ora('Getting preloaded organization JavaScripts').start()
@@ -36,6 +32,7 @@ async function getOrgJS(credentials) {
 
   return js
 }
+exports.getOrgJS = getOrgJS
 
 async function saveOrgJS(js, credentials) {
   const spinner = ora('Saving preloaded organization JavaScripts').start()
@@ -63,35 +60,4 @@ async function saveOrgJS(js, credentials) {
 
   return js
 }
-
-getAndVerifyCredentialsWithRetoolDB().then(async (credentials) => {
-  let js = await getOrgJS(credentials)
-
-  let changedJS
-
-  if (js && js.match(jsRegex)) {
-    const replace = await inquirer.prompt([
-      {
-        name: 'confirm',
-        message:
-          'Do you want to replace the existing javascript variable window.WEAVY_URL?',
-        type: 'confirm',
-        default: false
-      }
-    ])
-    if (replace.confirm) {
-        changedJS = js.replace(
-        jsRegex,
-        process.env.WEAVY_URL
-          ? `window.WEAVY_URL = { value: "${process.env.WEAVY_URL}" };`
-          : ''
-      )
-    }
-  } else {
-    changedJS = `${js || ''}${js ? '\n' : ''}window.WEAVY_URL = { value: "${process.env.WEAVY_URL}" };`
-  }
-
-  if (changedJS !== undefined) {
-      await saveOrgJS(changedJS, credentials)
-  }
-})
+exports.saveOrgJS = saveOrgJS
