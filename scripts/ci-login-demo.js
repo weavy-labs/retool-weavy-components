@@ -14,6 +14,11 @@ program
       .env('RETOOL_PASSWORD')
   )
   .addOption(
+    new Option('-s, --retool-subdomain <string>', 'Retool subdomain')
+      .makeOptionMandatory(true)
+      .env('RETOOL_SUBDOMAIN')
+  )
+  .addOption(
     new Option(
       '-t, --retool-apikey <string>',
       'Retool API token with custom components permissions'
@@ -54,6 +59,7 @@ const options = program.opts()
       false,
       options.retoolEmail,
       options.retoolPassword,
+      options.retoolSubdomain,
       true
     )
   

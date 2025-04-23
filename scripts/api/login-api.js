@@ -29,7 +29,7 @@ const chalk = require('chalk')
 // Ask the user to input their email and password.
 // Fire off a request to Retool's login & auth endpoints.
 // Persist the credentials.
-async function loginViaEmail(localhost = false, email, password, masked = false) {
+async function loginViaEmail(localhost = false, email, password, subdomain, masked = false) {
   /*if (!email) {
     email = await input({
       message: 'What is your email?'
@@ -41,9 +41,15 @@ async function loginViaEmail(localhost = false, email, password, masked = false)
     })
   }*/
 
-  const loginOrigin = localhost
+
+  let loginOrigin = localhost
     ? 'http://localhost:3000'
     : 'https://login.retool.com'
+
+
+  if (subdomain && subdomain.trim() !== '') {
+    loginOrigin = `https://${subdomain}.retool.com`
+  }
 
   // Step 1: Hit /api/login with email and password.
   const login = await postRequest(`${loginOrigin}/api/login`, {
@@ -110,9 +116,9 @@ function logSuccess(masked = false) {
       masked
         ? 'Logged into Retool CLI \u2705'
         : 'Logged into Retool CLI as '
-            .concat(chalk.bold(credentials.firstName), ' ')
-            .concat(chalk.bold(credentials.lastName), ' (')
-            .concat(credentials.email, ') \u2705')
+          .concat(chalk.bold(credentials.firstName), ' ')
+          .concat(chalk.bold(credentials.lastName), ' (')
+          .concat(credentials.email, ') \u2705')
     )
   } else {
     console.log('Successfully saved credentials.')

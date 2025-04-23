@@ -10,6 +10,7 @@ let email, password, cclToken, environment
 program
   .requiredOption('-e, --email <string>', 'Retool email')
   .requiredOption('-p, --password <string>', 'Retool password')
+  .requiredOption('-s, --subdomain <string>', 'Retool subdomain')
   .requiredOption('-t, --token <string>', 'Retool API token with custom components permissions')
 
 program.parse()

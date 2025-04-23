@@ -6,10 +6,13 @@ module.exports = async (options, installationUrl, status = 'success', statusMess
     if (status === 'error') {
         console.error(`Error encountered.\n${statusMessage}`)
     }
-    console.log('Posting weavy callback.')
+    console.log('Posting weavy callback. ' + status + "|" + statusMessage + "|" + weavyUrl + "|" + installationUrl)
 
     await fetch(WEAVY_CALLBACK_URL, {
         method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
         body: JSON.stringify({
             platform: "retool",
             weavyUrl,

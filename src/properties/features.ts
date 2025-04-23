@@ -1,163 +1,222 @@
 import { Retool } from '@tryretool/custom-component-support'
 import { Feature } from '@weavy/uikit-react'
 
-export const useAttachmentsFeature = (initialValue = true) => {
+export const useAttachmentsFeature = () => {
   const [enableAttachments] = Retool.useStateBoolean({
     name: 'enableAttachments',
     label: 'Attachments',
     inspector: "checkbox",
-    initialValue
+    initialValue: true
   })
   return enableAttachments ? Feature.Attachments : undefined
 }
 
-export const useCloudFilesFeature = (initialValue = true) => {
+export const useCloudFilesFeature = () => {
   const [enableCloudFiles] = Retool.useStateBoolean({
     name: 'enableCloudFiles',
     label: 'Cloud Files',
     inspector: "checkbox",
-    initialValue
+    initialValue: true
   })
   return enableCloudFiles ? Feature.CloudFiles : undefined
 }
 
-export const useGoogleMeetFeature = (initialValue = true) => {
+export const useGoogleMeetFeature = () => {
   const [enableGoogleMeet] = Retool.useStateBoolean({
     name: 'enableGoogleMeet',
     label: 'Google Meet',
     inspector: "checkbox",
-    initialValue,
+    initialValue: true,
   })
   return enableGoogleMeet ? Feature.GoogleMeet : undefined
 }
 
-export const useMicrosoftTeamsFeature = (initialValue = true) => {
+export const useOptionalGoogleMeetFeature = () => {
+  const [enableGoogleMeet] = Retool.useStateBoolean({
+    name: 'enableGoogleMeet',
+    label: 'Google Meet',
+    inspector: "checkbox",
+    initialValue: false,
+  })
+  return enableGoogleMeet ? Feature.GoogleMeet : undefined
+}
+
+export const useMicrosoftTeamsFeature = () => {
   const [enableMicrosoftTeams] = Retool.useStateBoolean({
     name: 'enableMicrosoftTeams',
     label: 'Microsoft Teams',
     inspector: "checkbox",
-    initialValue,
+    initialValue: true,
   })
   return enableMicrosoftTeams ? Feature.MicrosoftTeams : undefined
 }
 
-export const useZoomMeetingsFeature = (initialValue = true) => {
+export const useOptionalMicrosoftTeamsFeature = () => {
+  const [enableMicrosoftTeams] = Retool.useStateBoolean({
+    name: 'enableMicrosoftTeams',
+    label: 'Microsoft Teams',
+    inspector: "checkbox",
+    initialValue: false,
+  })
+  return enableMicrosoftTeams ? Feature.MicrosoftTeams : undefined
+}
+
+export const useZoomMeetingsFeature = () => {
   const [enableZoomMeetings] = Retool.useStateBoolean({
     name: 'enableZoomMeetings',
     label: 'Zoom Meetings',
     inspector: "checkbox",
-    initialValue,
+    initialValue: true,
   })
   return enableZoomMeetings ? Feature.ZoomMeetings : undefined
 }
 
+export const useOptionalZoomMeetingsFeature = () => {
+  const [enableZoomMeetings] = Retool.useStateBoolean({
+    name: 'enableZoomMeetings',
+    label: 'Zoom Meetings',
+    inspector: "checkbox",
+    initialValue: false,
+  })
+  return enableZoomMeetings ? Feature.ZoomMeetings : undefined
+}
 
-export const useMentionsFeature = (initialValue = true) => {
+export const useMentionsFeature = () => {
   const [enableMentions] = Retool.useStateBoolean({
     name: 'enableMentions',
     label: 'Mentions',
     inspector: "checkbox",
-    initialValue
+    initialValue: true
   })
   return enableMentions ? Feature.Mentions : undefined
 }
 
-export const usePollsFeature = (initialValue = true) => {
+export const useOptionalMentionsFeature = () => {
+  const [enableMentions] = Retool.useStateBoolean({
+    name: 'enableMentions',
+    label: 'Mentions',
+    inspector: "checkbox",
+    initialValue: false
+  })
+  return enableMentions ? Feature.Mentions : undefined
+}
+
+export const usePollsFeature = () => {
   const [enablePolls] = Retool.useStateBoolean({
     name: 'enablePolls',
     label: 'Polls',
     inspector: "checkbox",
-    initialValue
+    initialValue: true
   })
   return enablePolls ? Feature.Polls : undefined
 }
 
-export const usePreviewsFeature = (initialValue = true) => {
-  const [enablePreviews] = Retool.useStateBoolean({
+export const usePreviewsFeature = () => {
+   const [enablePreviews] = Retool.useStateBoolean({
     name: 'enablePreviews',
     label: 'Previews',
     inspector: "checkbox",
-    initialValue
+    initialValue: true
   })
   return enablePreviews ? Feature.Previews : undefined
 }
 
-export const useReactionsFeature = (initialValue = true) => {
+export const useReactionsFeature = () => {
   const [enableReactions] = Retool.useStateBoolean({
     name: 'enableReactions',
     label: 'Reactions',
     inspector: "checkbox",
-    initialValue
+    initialValue: true
   })
   return enableReactions ? Feature.Reactions : undefined
 }
 
-export const useCommentsFeature = (initialValue = true) => {
+export const useCommentsFeature = () => {
   const [enableComments] = Retool.useStateBoolean({
     name: 'enableComments',
     label: 'Comments',
     inspector: "checkbox",
-    initialValue
+    initialValue: true
   })
   return enableComments ? Feature.Comments : undefined
 }
 
-export const useVersionsFeature = (initialValue = true) => {
+export const useVersionsFeature = () => {
   const [enableVersions] = Retool.useStateBoolean({
     name: 'enableVersions',
     label: 'Versions',
     inspector: "checkbox",
-    initialValue
+    initialValue: true
   })
   return enableVersions ? Feature.Versions : undefined
 }
 
-export const useWebDAVFeature = (initialValue = true) => {
+export const useWebDAVFeature = () => {
   const [enableWebDAV] = Retool.useStateBoolean({
     name: 'enableWebDAV',
     label: 'WebDav',
     inspector: "checkbox",
-    initialValue
+    initialValue: true
   })
   return enableWebDAV ? Feature.WebDAV : undefined
 }
 
-export const useEmbedsFeature = (initialValue = true) => {
+export const useEmbedsFeature = () => {
   const [enableEmbeds] = Retool.useStateBoolean({
     name: 'enableEmbeds',
     label: 'Embeds',
     inspector: "checkbox",
-    initialValue
+    initialValue: true
   })
   return enableEmbeds ? Feature.Embeds : undefined 
 }
 
-export const useReceiptsFeature = (initialValue = true) => {
+export const useReceiptsFeature = () => {
   const [enableReceipts] = Retool.useStateBoolean({
     name: 'enableReceipts',
     label: 'Receipts',
     inspector: "checkbox",
-    initialValue
+    initialValue: true
   })
   return enableReceipts ? Feature.Receipts : undefined
 }
 
-export const useTypingFeature = (initialValue = true) => {
+export const useOptionalReceiptsFeature = () => {
+  const [enableReceipts] = Retool.useStateBoolean({
+    name: 'enableReceipts',
+    label: 'Receipts',
+    inspector: "checkbox",
+    initialValue: false
+  })
+  return enableReceipts ? Feature.Receipts : undefined
+}
+
+export const useTypingFeature = () => {
   const [enableTyping] = Retool.useStateBoolean({
     name: 'enableTyping',
     label: 'Typing',
     inspector: "checkbox",
-    initialValue
+    initialValue: true
   })
   return enableTyping ? Feature.Typing : undefined
 }
 
-export const useContextDataFeature = (initialValue = true) => {
+export const useOptionalTypingFeature = () => {
+  const [enableTyping] = Retool.useStateBoolean({
+    name: 'enableTyping',
+    label: 'Typing',
+    inspector: "checkbox",
+    initialValue: false
+  })
+  return enableTyping ? Feature.Typing : undefined
+}
+
+export const useContextDataFeature = () => {
   const [enableContextData] = Retool.useStateBoolean({
     name: 'enableContextData',
     label: 'Context data',
     inspector: "checkbox",
-    initialValue
+    initialValue: true
   })
   return enableContextData ? Feature.ContextData : undefined
 }
@@ -174,8 +233,8 @@ export const useChatFeatures = () => {
     usePollsFeature(),
     usePreviewsFeature(),
     useReactionsFeature(),
-    useReceiptsFeature(false),
-    useTypingFeature(false)
+    useOptionalReceiptsFeature(),
+    useOptionalTypingFeature()
   ].filter((f) => f).join(" ")
 
   return { features }
@@ -204,7 +263,7 @@ export const useCopilotFeatures = () => {
     //useContextDataFeature(),
     Feature.ContextData,
     useEmbedsFeature(),
-    useMentionsFeature(false),
+    useOptionalMentionsFeature(),
     usePreviewsFeature(),
     useReactionsFeature(),
     useTypingFeature()
@@ -218,16 +277,16 @@ export const useFilesFeatures = () => {
     useAttachmentsFeature(),
     useCloudFilesFeature(),
     useEmbedsFeature(),
-    useGoogleMeetFeature(false),
+    useOptionalGoogleMeetFeature(),
     useMentionsFeature(),
-    useMicrosoftTeamsFeature(false),
+    useOptionalMicrosoftTeamsFeature(),
     usePollsFeature(),
     usePreviewsFeature(),
     useReactionsFeature(),
     useCommentsFeature(),
     useVersionsFeature(),
     useWebDAVFeature(),
-    useZoomMeetingsFeature(false),
+    useOptionalZoomMeetingsFeature(),
   ].filter((f) => f).join(" ")
 
   return { features }
@@ -238,14 +297,14 @@ export const usePostsFeatures = () => {
     useAttachmentsFeature(),
     useCloudFilesFeature(),
     useEmbedsFeature(),
-    useGoogleMeetFeature(false),
+    useOptionalGoogleMeetFeature(),
     useMentionsFeature(),
-    useMicrosoftTeamsFeature(false),
+    useOptionalMicrosoftTeamsFeature(),
     usePreviewsFeature(),
     useReactionsFeature(),
     usePollsFeature(),
     useCommentsFeature(),
-    useZoomMeetingsFeature(false),
+    useOptionalZoomMeetingsFeature(),
   ].filter((f) => f).join(" ")
 
   return { features }
