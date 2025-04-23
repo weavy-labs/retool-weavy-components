@@ -73,10 +73,10 @@ const options = program.opts()
     await require('./api/workflows')(options)
     await require('./api/components')(options, 'default', true)
     const { appUrl } = await require('./api/demo-app')(options)
-    await require('./api/weavy-callback')(options, appUrl)
+    await require('./api/weavy-callback')(options, appUrl, undefined, undefined, true)
     core.setOutput("installationUrl", appUrl);
   } catch(e) {
-    await require('./api/weavy-callback')(options, undefined, "error", e.message)
+    await require('./api/weavy-callback')(options, undefined, "error", e.message, true)
     process.exit(-1)
   }
 })()
