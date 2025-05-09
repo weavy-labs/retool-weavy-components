@@ -21,7 +21,7 @@ function getResourcePayloadData(environmentUrl, apiKey, folderId) {
     options: {
       spec: `${environmentUrl}/api/openapi.json`,
       authentication: 'bearer',
-      customHeaders: [['', '']],
+      customHeaders: [['Content-Type', 'application/json']],
       customQueryParameters: [['', '']],
       defaultServerVariables: [['', '']],
       bearer_token: apiKey
