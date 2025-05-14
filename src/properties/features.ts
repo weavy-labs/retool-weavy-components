@@ -225,6 +225,7 @@ export const useChatFeatures = () => {
   const features = [
     useAttachmentsFeature(),
     useCloudFilesFeature(),
+    Feature.ContextData,
     useEmbedsFeature(),
     useGoogleMeetFeature(),
     useMicrosoftTeamsFeature(),
@@ -244,6 +245,7 @@ export const useCommentsFeatures = () => {
   const features = [
     useAttachmentsFeature(),
     useCloudFilesFeature(),
+    Feature.ContextData,
     useEmbedsFeature(),
     useGoogleMeetFeature(),
     useMentionsFeature(),
@@ -276,6 +278,7 @@ export const useFilesFeatures = () => {
   const features = [
     useAttachmentsFeature(),
     useCloudFilesFeature(),
+    Feature.ContextData,
     useEmbedsFeature(),
     useOptionalGoogleMeetFeature(),
     useMentionsFeature(),
@@ -296,6 +299,7 @@ export const usePostsFeatures = () => {
   const features = [
     useAttachmentsFeature(),
     useCloudFilesFeature(),
+    Feature.ContextData,
     useEmbedsFeature(),
     useOptionalGoogleMeetFeature(),
     useMentionsFeature(),
@@ -314,6 +318,7 @@ export const useMessengerFeatures = () => {
   const features = [
     useAttachmentsFeature(),
     useCloudFilesFeature(),
+    Feature.ContextData,
     useGoogleMeetFeature(),
     useEmbedsFeature(),
     useMentionsFeature(),

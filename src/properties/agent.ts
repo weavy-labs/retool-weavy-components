@@ -1,28 +1,29 @@
 import { Retool } from '@tryretool/custom-component-support'
 
-export const useBot = () => {
-  const [bot] = Retool.useStateString({
-    name: 'bot',
-    label: 'Bot',
-    description: 'Bot mode'
+export const useAgent = () => {
+  const [agent] = Retool.useStateString({
+    name: 'agent',
+    label: 'Agent',
+    description: 'Agent mode',
+    initialValue: 'assistant'
   })
-  return { bot }
+  return { agent }
 }
 
-export const useOptionalBot = () => {
-  const [bot] = Retool.useStateString({
-    name: 'bot',
-    label: 'Bot (optional)',
-    description: 'Optional bot mode'
+export const useOptionalAgent = () => {
+  const [agent] = Retool.useStateString({
+    name: 'agent',
+    label: 'Agent (optional)',
+    description: 'Optional agent mode'
   })
-  return { bot: bot || undefined }
+  return { agent: agent || undefined }
 }
 
 export const useInstructions = () => {
   const [instructions] = Retool.useStateString({
     name: 'instructions',
-    label: 'Bot instructions',
-    description: 'Instructions for the bot.'
+    label: 'Agent instructions',
+    description: 'Instructions for the AI Agent.'
   })
 
   return { instructions: instructions || undefined }

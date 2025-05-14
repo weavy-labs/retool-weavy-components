@@ -12,11 +12,12 @@ import { useThemeMode, useThemeStyles } from '../properties/theme'
 import { useMessengerFeatures } from '../properties/features'
 import { useName } from '../properties/uid'
 import { usePreviewEvent } from '../properties/preview'
-import { useOptionalBot } from '../properties/bot'
+import { useOptionalAgent, useContextData } from '../properties/agent'
 
 export const WeavyMessenger: FC = () => {
   const { name } = useName()
-  const { bot } = useOptionalBot()
+  const { agent } = useOptionalAgent()
+  const { contextData } = useContextData()
   const features = useMessengerFeatures()
   const { modeClassName } = useThemeMode()
   const { themeStyles } = useThemeStyles()
@@ -34,7 +35,8 @@ export const WeavyMessenger: FC = () => {
   return (
     <WyMessenger
       name={name}
-      bot={bot}
+      agent={agent}
+      data={contextData ? [contextData] : undefined}
       className={modeClassName}
       style={themeStyles}
       onWyPreviewOpen={handlePreview}

@@ -15,10 +15,12 @@ import {
 } from '../properties/notifications'
 import { usePreviewEvent } from '../properties/preview'
 import '../styles.css'
+import { useContextData } from '../properties/agent'
 
 export const WeavyPosts: FC = () => {
   const { name } = useName()
   const { uid } = useUid()
+  const { contextData } = useContextData()
   const features = usePostsFeatures()
   const notifications = useNotificationProps()
   const { modeClassName } = useThemeMode()
@@ -42,6 +44,7 @@ export const WeavyPosts: FC = () => {
     <WyPosts
       uid={uid}
       name={name}
+      data={contextData ? [contextData] : undefined}
       className={modeClassName}
       style={themeStyles}
       ref={navigationRefCallBack}

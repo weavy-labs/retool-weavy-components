@@ -21,18 +21,18 @@ import {
 import { usePreviewEvent } from '../properties/preview'
 import '../styles.css'
 import {
-  useBot,
+  useAgent,
   useContextData,
   useInstructions,
   useMessageEvent,
   useNewButton,
   useSuggestions
-} from '../properties/bot'
+} from '../properties/agent'
 
 const { WyButton, WyIcon } = WeavyComponents
 
 export const WeavyCopilot: FC = () => {
-  const { bot } = useBot()
+  const { agent } = useAgent()
   const { instructions } = useInstructions()
   const { contextData } = useContextData()
   const { suggestions } = useSuggestions()
@@ -68,7 +68,7 @@ export const WeavyCopilot: FC = () => {
       }}
       uid={!enableAutoUid ? uid : undefined}
       autoUid={enableAutoUid && uid ? uid : undefined}
-      bot={bot}
+      agent={agent}
       instructions={instructions}
       data={contextData ? [contextData] : undefined}
       name={name}

@@ -84,6 +84,7 @@ export const WeavyPreview: FC = () => {
       style={themeStyles}
       features={previewDetail.features}
       app={previewDetail.app}
+      contextDataBlobs={previewDetail.contextDataBlobs}
     >
       <WeavyComponents.WyPreview
         filled
