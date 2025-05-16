@@ -18,10 +18,10 @@ module.exports = async (options, installationUrl, status = 'success', statusMess
         },
         body: JSON.stringify({
             platform: "retool",
-            weavyUrl,
-            installationUrl,
+            weavy_url: weavyUrl,
+            installation_url: installationUrl,
             status,
-            statusMessage
+            status_message: statusMessage
         })
     })
 }
