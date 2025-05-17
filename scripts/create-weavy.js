@@ -4,12 +4,12 @@ require('dotenv').config()
 
 program
   .addOption(
-    new Option('-u, --url <string>', 'Weavy environment url')
+    new Option('-u, --weavy-url <string>', 'Weavy environment url')
       .makeOptionMandatory(true)
       .env('WEAVY_URL')
   )
   .addOption(
-    new Option('-a, --apikey <string>', 'Weavy environment API key')
+    new Option('-a, --weavy-apikey <string>', 'Weavy environment API key')
       .makeOptionMandatory(true)
       .env('WEAVY_APIKEY')
   )
