@@ -1,6 +1,6 @@
 {
   "name": "weavy-react-components",
-  "version": "28.0.1",
+  "version": "28.0.1-retool-rest",
   "private": true,
   "scripts": {
     "login": "retool login && retool-ccl login",

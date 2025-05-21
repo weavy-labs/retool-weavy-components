@@ -17,6 +17,9 @@ program
     new Option('--no-inquiry', 'No questions asked').env('WEAVY_NO_INQUIRY')
   )
   .addOption(
+    new Option('--resource <type>', 'Type of Retool Resource').choices(['openapi', 'restapi']).env('RETOOL_API_TYPE')
+  )
+  .addOption(
     new Option(
       '-r, --replace',
       'Whether to replace any existing configuration in Retool'
