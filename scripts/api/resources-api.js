@@ -42,10 +42,9 @@ function getResourcePayloadData(environmentUrl, apiKey, folderId, type = DEFAULT
         type: 'restapi',
         options: {
           baseURL: environmentUrl,
+          headers: [['Content-Type', 'application/json']],
           authentication: 'bearer',
-          customHeaders: [['Content-Type', 'application/json']],
-          customQueryParameters: [['', '']],
-          defaultServerVariables: [['', '']],
+          //urlparams: [['', '']],
           bearer_token: apiKey
         },
         id: null,
