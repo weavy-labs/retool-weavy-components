@@ -14,6 +14,9 @@ program
       .env('WEAVY_APIKEY')
   )
   .addOption(
+    new Option('--resource <type>', 'Type of Retool Resource').choices(['openapi', 'restapi']).env('RETOOL_API_TYPE')
+  )
+  .addOption(
     new Option('--no-inquiry', 'No questions asked').env('WEAVY_NO_INQUIRY')
   )
   .addOption(

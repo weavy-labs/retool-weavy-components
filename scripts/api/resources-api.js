@@ -9,28 +9,51 @@ const axios = require('axios')
 
 /// RESOURCES
 
+const DEFAULT_RESOURCE_TYPE = 'restapi'
+exports.DEFAULT_RESOURCE_TYPE = DEFAULT_RESOURCE_TYPE
+
 const WEAVY_API_NAME = 'WeavyAPI'
 exports.WEAVY_API_NAME = WEAVY_API_NAME
 
 const WEAVY_API_DISPLAY_NAME = 'Weavy API'
 exports.WEAVY_API_DISPLAY_NAME = WEAVY_API_DISPLAY_NAME
 
-function getResourcePayloadData(environmentUrl, apiKey, folderId) {
-  return {
-    type: 'openapi',
-    options: {
-      spec: `${environmentUrl}/api/openapi.json`,
-      authentication: 'bearer',
-      customHeaders: [['Content-Type', 'application/json']],
-      customQueryParameters: [['', '']],
-      defaultServerVariables: [['', '']],
-      bearer_token: apiKey
-    },
-    id: null,
-    name: WEAVY_API_NAME,
-    displayName: WEAVY_API_DISPLAY_NAME,
-    resourceFolderId: folderId,
-    description: 'Weavy Web API using weavy.io environment'
+function getResourcePayloadData(environmentUrl, apiKey, folderId, type = DEFAULT_RESOURCE_TYPE) {
+  switch (type) {
+    case 'openapi':
+      return {
+        type: 'openapi',
+        options: {
+          spec: `${environmentUrl}/api/openapi.json`,
+          authentication: 'bearer',
+          customHeaders: [['Content-Type', 'application/json']],
+          customQueryParameters: [['', '']],
+          defaultServerVariables: [['', '']],
+          bearer_token: apiKey
+        },
+        id: null,
+        name: WEAVY_API_NAME,
+        displayName: WEAVY_API_DISPLAY_NAME,
+        resourceFolderId: folderId,
+        description: 'Weavy Web API using weavy.io environment'
+      };
+    case 'restapi':
+      return {
+        type: 'restapi',
+        options: {
+          baseURL: environmentUrl,
+          authentication: 'bearer',
+          customHeaders: [['Content-Type', 'application/json']],
+          customQueryParameters: [['', '']],
+          defaultServerVariables: [['', '']],
+          bearer_token: apiKey
+        },
+        id: null,
+        name: WEAVY_API_NAME,
+        displayName: WEAVY_API_DISPLAY_NAME,
+        resourceFolderId: folderId,
+        description: 'Weavy Web API using weavy.io environment'
+      }
   }
 }
 exports.getResourcePayloadData = getResourcePayloadData
@@ -61,10 +84,10 @@ async function testConnection(connectionPayload, credentials) {
 }
 exports.testConnection = testConnection
 
-async function createResource(url, apiKey, folderId, credentials) {
-  const spinner = ora('Creating Weavy API resource').start()
+async function createResource(url, apiKey, folderId, credentials, type = DEFAULT_RESOURCE_TYPE) {
+  const spinner = ora(`Creating Weavy API resource (${type})`).start()
 
-  const resourcePayload = getResourcePayloadData(url, apiKey, folderId)
+  const resourcePayload = getResourcePayloadData(url, apiKey, folderId, type)
 
   let resource
 
@@ -85,10 +108,25 @@ async function createResource(url, apiKey, folderId, credentials) {
 }
 exports.createResource = createResource
 
-async function updateResource(name, url, apiKey, folderId, credentials) {
-  const spinner = ora('Updating Weavy API resource').start()
+async function removeResource(name, type, credentials) {
+  const spinner = ora(`Removing Weavy API resource (${type})`).start()
 
-  const resourcePayload = getResourcePayloadData(url, apiKey, folderId)
+  try {
+    await axios.delete(
+      `${credentials.origin}/api/resources/names/${name}`,
+    )
+    spinner.succeed()
+  } catch (e) {
+    spinner.fail(`Error removing resource: ${e.errorMessage}`)
+    throw e
+  }
+}
+exports.removeResource = removeResource
+
+async function updateResource(name, url, apiKey, folderId, credentials, type = DEFAULT_RESOURCE_TYPE) {
+  const spinner = ora(`Updating Weavy API resource (${type})`).start()
+
+  const resourcePayload = getResourcePayloadData(url, apiKey, folderId, type)
 
   let resource
 

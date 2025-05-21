@@ -10,11 +10,13 @@ const { createWorkflow, getWorkflow } = require('./workflows-api')
 const {
   deleteWorkflow
 } = require('retool-cli/lib/utils/workflows')
-
-const authenticationWorkflowData = require('../../workflows/WeavyAuthentication.json')
-const pageNavigationWorkflowData = require('../../workflows/WeavyPageNavigation.json')
+const { DEFAULT_RESOURCE_TYPE } = require('./resources-api')
 
 module.exports = async (options) => getAndVerifyCredentialsWithRetoolDB().then(async (credentials) => {
+  const resourceType = options.resource || DEFAULT_RESOURCE_TYPE;
+  const authenticationWorkflowData = require(`../../workflows/WeavyAuthentication.${resourceType}.json`)
+  const pageNavigationWorkflowData = require(`../../workflows/WeavyPageNavigation.${resourceType}.json`)
+
   // Authentication
   const existingAuthenticationWorkflow = await getWorkflow(
     authenticationWorkflowData,

@@ -10,8 +10,8 @@ const axios = require('axios')
 
 const weavyComponents = require('../../weavy-components.json')
 const demoApp = require('../../demo/weavy-components-multipage-layout.json')
-const authenticationWorkflowData = require('../../workflows/WeavyAuthentication.json')
-const pageNavigationWorkflowData = require('../../workflows/WeavyPageNavigation.json')
+const authenticationWorkflowData = require('../../workflows/WeavyAuthentication.restapi.json')
+const pageNavigationWorkflowData = require('../../workflows/WeavyPageNavigation.restapi.json')
 
 const uuidRegex = /"collectionUuid","(?<uuid>[0-9a-f\-]+)"/gm
 const revUuidRegex = /"collectionRevisionUuid","(?<revUuid>[0-9a-f\-]+)"/gm

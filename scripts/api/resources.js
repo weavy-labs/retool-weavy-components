@@ -10,6 +10,7 @@ const {
   testConnection,
   updateResource,
   createResource,
+  removeResource,
   getResources,
   getResourceRootFolder,
   getResourcePayloadData,
@@ -78,11 +79,14 @@ module.exports = (options) => getAndVerifyCredentialsWithRetoolDB().then(
       } else {
         const rootFolder = getResourceRootFolder(resources)
 
+        const resourceType = options.resource || (updateExisting && existingResource ? existingResource.type : undefined)
+
         const connectionPayload = {
           changeset: getResourcePayloadData(
             options.weavyUrl,
             options.weavyApikey,
-            rootFolder.id
+            rootFolder.id,
+            resourceType
           ),
           environment: 'production'
         }
@@ -93,20 +97,25 @@ module.exports = (options) => getAndVerifyCredentialsWithRetoolDB().then(
         )
 
         if (connectionOk) {
-          if (updateExisting) {
+          if (updateExisting && existingResource.type === resourceType) {
             await updateResource(
               existingResource.name,
               options.weavyUrl,
               options.weavyApikey,
               rootFolder.id,
-              credentials
+              credentials,
+              resourceType
             )
           } else {
+            if (updateExisting) {
+              await removeResource(existingResource.name, existingResource.type, credentials);
+            }
             await createResource(
               options.weavyUrl,
               options.weavyApikey,
               rootFolder.id,
-              credentials
+              credentials,
+              resourceType
             )
           }
         }
