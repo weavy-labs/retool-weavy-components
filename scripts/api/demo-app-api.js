@@ -18,8 +18,8 @@ const revUuidRegex = /"collectionRevisionUuid","(?<revUuid>[0-9a-f\-]+)"/gm
 const workflowRegex = /"workflowId","(?<workflowId>[0-9a-f\-]+)"/gm
 const envRegex = /{{ window\.WEAVY_URL[^\}]*}}/gm
 
-const replaceAuthenticationUuid = '195adaf4-6b91-49b6-9c5c-b6daf3f7df83'
-const replacePageNavigationUuid = '50719db4-1333-4d29-918f-5980eec113ef'
+const replaceAuthenticationUuid = '5c2b7dfe-caef-48e1-be06-09bed78176d4'
+const replacePageNavigationUuid = 'a53659c8-3a31-48a5-bed5-9c1c4007737f'
 
 const DEMO_APP_NAME = 'Weavy Components - Multipage Layout'
 exports.DEMO_APP_NAME = DEMO_APP_NAME

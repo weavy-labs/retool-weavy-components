@@ -14,6 +14,7 @@ const {
   getResources,
   getResourceRootFolder,
   getResourcePayloadData,
+  testWeavyResource,
   WEAVY_API_DISPLAY_NAME,
   WEAVY_API_NAME
 } = require('./resources-api')
@@ -64,13 +65,7 @@ module.exports = (options) => getAndVerifyCredentialsWithRetoolDB().then(
     }
 
     if (existingResource && !updateExisting) {
-      const connectionPayload = {
-        changeset: {},
-        environment: 'production',
-        resourceName: WEAVY_API_NAME
-      }
-
-      await testConnection(connectionPayload, credentials)
+      await testWeavyResource(credentials);
     } else {
       if (!options.weavyUrl) {
         console.warn('No WEAVY_URL configured in .env')
@@ -119,6 +114,8 @@ module.exports = (options) => getAndVerifyCredentialsWithRetoolDB().then(
             )
           }
         }
+        // Test created connection
+        await testWeavyResource(credentials);
       }
     }
   }

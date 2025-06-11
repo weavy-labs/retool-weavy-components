@@ -10,12 +10,10 @@ import {
 import '../styles.css'
 import { useThemeMode, useThemeStyles } from '../properties/theme'
 import { useMessengerFeatures } from '../properties/features'
-import { useName } from '../properties/uid'
 import { usePreviewEvent } from '../properties/preview'
 import { useOptionalAgent, useContextData } from '../properties/agent'
 
 export const WeavyMessenger: FC = () => {
-  const { name } = useName()
   const { agent } = useOptionalAgent()
   const { contextData } = useContextData()
   const features = useMessengerFeatures()
@@ -34,7 +32,6 @@ export const WeavyMessenger: FC = () => {
 
   return (
     <WyMessenger
-      name={name}
       agent={agent}
       data={contextData ? [contextData] : undefined}
       className={modeClassName}

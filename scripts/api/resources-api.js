@@ -216,3 +216,14 @@ function getResourceRootFolder(resources) {
   return rootFolder
 }
 exports.getResourceRootFolder = getResourceRootFolder
+
+async function testWeavyResource(credentials) {
+  const connectionPayload = {
+    changeset: {},
+    environment: 'production',
+    resourceName: WEAVY_API_NAME
+  }
+
+  await testConnection(connectionPayload, credentials)
+}
+exports.testWeavyResource = testWeavyResource
