@@ -1,5 +1,5 @@
 import { Retool } from '@tryretool/custom-component-support'
-import { WyPreviewOpenEventType } from '@weavy/uikit-react/dist/types/components'
+import { WyPreviewOpenEventType } from '@weavy/uikit-react'
 
 export const usePreviewEvent = () => {
   const triggerPreview = Retool.useEventCallback({

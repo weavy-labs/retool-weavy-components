@@ -16,7 +16,6 @@ import { useThemeMode, useThemeStyles } from '../properties/theme'
 import { useCopilotFeatures } from '../properties/features'
 import {
   useNavigationEventCallback,
-  useNotificationProps
 } from '../properties/notifications'
 import { usePreviewEvent } from '../properties/preview'
 import '../styles.css'
@@ -41,7 +40,6 @@ export const WeavyCopilot: FC = () => {
   const { uid } = useOptionalUid()
   const { enableAutoUid } = useAutoUid()
   const features = useCopilotFeatures()
-  const notifications = useNotificationProps()
   const { modeClassName } = useThemeMode()
   const { themeStyles } = useThemeStyles()
   const { weavyUrl } = useWeavyUrl()
@@ -67,23 +65,24 @@ export const WeavyCopilot: FC = () => {
         }
       }}
       uid={!enableAutoUid ? uid : undefined}
-      autoUid={enableAutoUid && uid ? uid : undefined}
+      generateUid={enableAutoUid && uid ? uid : undefined}
       agent={agent}
       instructions={instructions}
-      data={contextData ? [contextData] : undefined}
+      contextualData={contextData || undefined}
       name={name}
       className={modeClassName}
-      style={themeStyles}
+      style={themeStyles as any}
       onWyPreviewOpen={handlePreview}
       onWyApp={(e) => {
-        setAppId(e.detail.app.id)
-        triggerAppId()
+        if(e.detail.app?.id) {
+          setAppId(e.detail.app.id)
+          triggerAppId()
+        }
       }}
       onWyMessage={(e) => {
         setLastMessage(e.detail)
         triggerMessage()
       }}
-      {...notifications}
       {...features}
     >
       {enableNewButton ? (

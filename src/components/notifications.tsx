@@ -6,7 +6,8 @@ import {
   useWeavy,
   WyLinkEventType,
   WyNotifications,
-  WyNotificationsEventType
+  WyNotificationEventType,
+  WyNotificationToasts
 } from '@weavy/uikit-react'
 import {
   useAccessToken,
@@ -44,7 +45,6 @@ export const WeavyNotificationEvents: FC = () => {
     {
       url: weavyUrl,
       tokenFactory,
-      notificationEvents: true
     },
     [accessToken]
   )
@@ -73,12 +73,12 @@ export const WeavyNotificationEvents: FC = () => {
     }
   }
 
-  const handleNotifications = (e: WyNotificationsEventType) => {
-    if (e.detail.notification && e.detail.action === 'notification_created') {
+  const handleNotifications = (e: WyNotificationEventType) => {
+    if (e.detail) {
       // Only show notifications when a new notification is received
 
       // Show notifications using the Retool
-      const [title, description] = e.detail.notification.plain.split(':', 2)
+      const [title, description] = e.detail.plain.split(':', 2)
       setNotificationTitle(title)
       setNotificationDescription(description)
 
@@ -93,21 +93,10 @@ export const WeavyNotificationEvents: FC = () => {
     if (weavy && weavyUrl && accessToken) {
       // Get initial notification count
       updateNotificationCount()
-
-      // Configure realtime notifications listener
-      weavy.notificationEvents = true
-
-      // Add a realtime notification event listener
-      weavy.host?.addEventListener('wy-notifications', handleNotifications)
-
-      return () => {
-        // Unregister the event listener when the component is unmounted
-        weavy.host?.removeEventListener('wy-notifications', handleNotifications)
-      }
     }
   }, [weavy, weavyUrl, accessToken])
 
-  return <></>
+  return <WyNotificationToasts onWyNotification={handleNotifications} appearance='none' />
 }
 
 export const WeavyNotifications: FC = () => {
@@ -164,7 +153,7 @@ export const WeavyNotifications: FC = () => {
   )
 
   const handleLink = async (e: WyLinkEventType) => {
-    const appType = e.detail.link.app?.type
+    const appType = e.detail.link?.app?.type
 
     setLinkData(e.detail)
 
@@ -213,7 +202,7 @@ export const WeavyNotifications: FC = () => {
       uid={uid}
       onWyLink={handleLink}
       className={modeClassName}
-      style={themeStyles}
+      style={themeStyles as any}
     />
   )
 }

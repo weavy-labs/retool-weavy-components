@@ -81,7 +81,7 @@ export const WeavyPreview: FC = () => {
   return (
     <WyComponent
       className={modeClassName}
-      style={themeStyles}
+      style={themeStyles as any}
       features={previewDetail.features}
       app={previewDetail.app}
       contextDataBlobs={previewDetail.contextDataBlobs}

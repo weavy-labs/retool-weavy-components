@@ -1,4 +1,5 @@
 import { Retool } from '@tryretool/custom-component-support'
+import { CSSProperties } from 'react'
 
 export type RetoolFont = {
     fontWeight: string,
@@ -107,7 +108,7 @@ export const useThemeStyles = () => {
     const { themeAvatarBorderRadius } = useThemeAvatarBorderRadius(); 
     const { themeColors } = useThemeColors(); 
 
-    const themeStyles: React.CSSProperties & { [key: `--${string}`]: string } = {
+    const themeStyles: CSSProperties = <React.CSSProperties & { [key: `--${string}`]: string }>{
         fontFamily: themeFontFamily,
         ['--wy-font-size']: themeFontSize,
         ['--wy-border-radius']: themeBorderRadius,

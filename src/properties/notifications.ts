@@ -47,31 +47,6 @@ export const useNotificationDescription = () => {
   return { setNotificationDescription }
 }
 
-export const useNotificationProps = () => {
-  const [enableNotifications] = Retool.useStateBoolean({
-    name: 'enableNotifications',
-    label: 'Notifications button',
-    inspector: 'checkbox',
-    initialValue: true
-  })
-
-  const [notificationsBadge] = Retool.useStateEnumeration({
-    name: 'notificationBadge',
-    label: 'Notifications badge',
-    enumDefinition: ['count', 'dot', 'none'],
-    enumLabels: { count: 'Number', dot: 'Dot', none: 'None' },
-    inspector: 'select',
-    initialValue: 'count'
-  })
-
-  return {
-    notifications: <'button-list' | 'none'>(
-      (enableNotifications ? 'button-list' : 'none')
-    ),
-    notificationsBadge: <'count' | 'dot' | 'none'>notificationsBadge
-  }
-}
-
 type WyAppRef = HTMLElement & { whenApp: () => Promise<AppWithSourceMetadataType> } | null
 
 export const useNavigationEventCallback = (deps: React.DependencyList) => {

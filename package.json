@@ -1,6 +1,6 @@
 {
   "name": "weavy-react-components",
-  "version": "29.2.1",
+  "version": "30.0.0",
   "private": true,
   "scripts": {
     "login": "retool login && retool-ccl login",
@@ -10,7 +10,7 @@
     "deploy": "retool-ccl deploy"
   },
   "dependencies": {
-    "@weavy/uikit-react": "^29.2.1",
+    "@weavy/uikit-react": "^30.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },

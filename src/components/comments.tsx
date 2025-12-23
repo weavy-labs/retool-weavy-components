@@ -9,7 +9,7 @@ import {
 import { useUid, useName } from '../properties/uid'
 import { useThemeMode, useThemeStyles } from '../properties/theme'
 import { useCommentsFeatures } from '../properties/features'
-import { useNavigationEventCallback, useNotificationProps } from '../properties/notifications'
+import { useNavigationEventCallback } from '../properties/notifications'
 import { usePreviewEvent } from '../properties/preview'
 import '../styles.css'
 import { useContextData } from '../properties/agent'
@@ -19,7 +19,6 @@ export const WeavyComments: FC = () => {
   const { uid } = useUid()
   const { contextData } = useContextData()
   const features = useCommentsFeatures()
-  const notifications = useNotificationProps()
   const { modeClassName } = useThemeMode()
   const { themeStyles } = useThemeStyles()
   const { weavyUrl } = useWeavyUrl()
@@ -27,23 +26,25 @@ export const WeavyComments: FC = () => {
   const { weavyOptions } = useWeavyOptions()
   const { navigationRefCallBack } = useNavigationEventCallback([uid])
   const { handlePreview } = usePreviewEvent()
-  
-  const weavy = useWeavy({
-    url: weavyUrl,
-    tokenFactory,
-    ...weavyOptions
-  }, [accessToken])
+
+  const weavy = useWeavy(
+    {
+      url: weavyUrl,
+      tokenFactory,
+      ...weavyOptions
+    },
+    [accessToken]
+  )
 
   return (
     <WyComments
       uid={uid}
       name={name}
-      data={contextData ? [contextData] : undefined}
+      contextualData={contextData || undefined}
       className={modeClassName}
-      style={themeStyles}
+      style={themeStyles as any}
       ref={navigationRefCallBack}
       onWyPreviewOpen={handlePreview}
-      {...notifications}
       {...features}
     />
   )

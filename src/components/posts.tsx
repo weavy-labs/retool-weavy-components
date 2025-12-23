@@ -11,7 +11,6 @@ import { useThemeMode, useThemeStyles } from '../properties/theme'
 import { usePostsFeatures } from '../properties/features'
 import {
   useNavigationEventCallback,
-  useNotificationProps
 } from '../properties/notifications'
 import { usePreviewEvent } from '../properties/preview'
 import '../styles.css'
@@ -22,7 +21,6 @@ export const WeavyPosts: FC = () => {
   const { uid } = useUid()
   const { contextData } = useContextData()
   const features = usePostsFeatures()
-  const notifications = useNotificationProps()
   const { modeClassName } = useThemeMode()
   const { themeStyles } = useThemeStyles()
   const { weavyUrl } = useWeavyUrl()
@@ -44,12 +42,11 @@ export const WeavyPosts: FC = () => {
     <WyPosts
       uid={uid}
       name={name}
-      data={contextData ? [contextData] : undefined}
+      contextualData={contextData || undefined}
       className={modeClassName}
-      style={themeStyles}
+      style={themeStyles as any}
       ref={navigationRefCallBack}
       onWyPreviewOpen={handlePreview}
-      {...notifications}
       {...features}
     />
   )

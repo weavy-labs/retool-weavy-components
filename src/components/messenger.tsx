@@ -33,9 +33,9 @@ export const WeavyMessenger: FC = () => {
   return (
     <WyMessenger
       agent={agent}
-      data={contextData ? [contextData] : undefined}
+      contextualData={contextData || undefined}
       className={modeClassName}
-      style={themeStyles}
+      style={themeStyles as any}
       onWyPreviewOpen={handlePreview}
       {...features}
     />

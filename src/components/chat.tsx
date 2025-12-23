@@ -9,10 +9,7 @@ import {
 import { useUid, useName } from '../properties/uid'
 import { useThemeMode, useThemeStyles } from '../properties/theme'
 import { useChatFeatures } from '../properties/features'
-import {
-  useNavigationEventCallback,
-  useNotificationProps
-} from '../properties/notifications'
+import { useNavigationEventCallback } from '../properties/notifications'
 import { usePreviewEvent } from '../properties/preview'
 import '../styles.css'
 import { useContextData } from '../properties/agent'
@@ -22,7 +19,6 @@ export const WeavyChat: FC = () => {
   const { uid } = useUid()
   const { contextData } = useContextData()
   const features = useChatFeatures()
-  const notifications = useNotificationProps()
   const { modeClassName } = useThemeMode()
   const { themeStyles } = useThemeStyles()
   const { weavyUrl } = useWeavyUrl()
@@ -44,12 +40,11 @@ export const WeavyChat: FC = () => {
     <WyChat
       uid={uid}
       name={name}
-      data={contextData ? [contextData] : undefined}
+      contextualData={contextData || undefined}
       className={modeClassName}
-      style={themeStyles}
+      style={themeStyles as any}
       ref={navigationRefCallBack}
       onWyPreviewOpen={handlePreview}
-      {...notifications}
       {...features}
     />
   )
