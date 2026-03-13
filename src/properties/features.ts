@@ -8,7 +8,7 @@ export const useAttachmentsFeature = () => {
     inspector: "checkbox",
     initialValue: true
   })
-  return enableAttachments ? Feature.Attachments : undefined
+  return (enableAttachments ? "" : "-") + Feature.Attachments
 }
 
 export const useCloudFilesFeature = () => {
@@ -18,7 +18,7 @@ export const useCloudFilesFeature = () => {
     inspector: "checkbox",
     initialValue: true
   })
-  return enableCloudFiles ? Feature.CloudFiles : undefined
+  return (enableCloudFiles ? "" : "-") + Feature.CloudFiles
 }
 
 export const useGoogleMeetFeature = () => {
@@ -28,7 +28,7 @@ export const useGoogleMeetFeature = () => {
     inspector: "checkbox",
     initialValue: true,
   })
-  return enableGoogleMeet ? Feature.GoogleMeet : undefined
+  return (enableGoogleMeet ? "" : "-") + Feature.GoogleMeet
 }
 
 export const useOptionalGoogleMeetFeature = () => {
@@ -38,7 +38,7 @@ export const useOptionalGoogleMeetFeature = () => {
     inspector: "checkbox",
     initialValue: false,
   })
-  return enableGoogleMeet ? Feature.GoogleMeet : undefined
+  return (enableGoogleMeet ? "" : "-") + Feature.GoogleMeet
 }
 
 export const useMicrosoftTeamsFeature = () => {
@@ -48,7 +48,7 @@ export const useMicrosoftTeamsFeature = () => {
     inspector: "checkbox",
     initialValue: true,
   })
-  return enableMicrosoftTeams ? Feature.MicrosoftTeams : undefined
+  return (enableMicrosoftTeams ? "" : "-") + Feature.MicrosoftTeams
 }
 
 export const useOptionalMicrosoftTeamsFeature = () => {
@@ -58,7 +58,7 @@ export const useOptionalMicrosoftTeamsFeature = () => {
     inspector: "checkbox",
     initialValue: false,
   })
-  return enableMicrosoftTeams ? Feature.MicrosoftTeams : undefined
+  return (enableMicrosoftTeams ? "" : "-") + Feature.MicrosoftTeams
 }
 
 export const useZoomMeetingsFeature = () => {
@@ -68,7 +68,7 @@ export const useZoomMeetingsFeature = () => {
     inspector: "checkbox",
     initialValue: true,
   })
-  return enableZoomMeetings ? Feature.ZoomMeetings : undefined
+  return (enableZoomMeetings ? "" : "-") + Feature.ZoomMeetings
 }
 
 export const useOptionalZoomMeetingsFeature = () => {
@@ -78,7 +78,7 @@ export const useOptionalZoomMeetingsFeature = () => {
     inspector: "checkbox",
     initialValue: false,
   })
-  return enableZoomMeetings ? Feature.ZoomMeetings : undefined
+  return (enableZoomMeetings ? "" : "-") + Feature.ZoomMeetings
 }
 
 export const useMentionsFeature = () => {
@@ -88,7 +88,7 @@ export const useMentionsFeature = () => {
     inspector: "checkbox",
     initialValue: true
   })
-  return enableMentions ? Feature.Mentions : undefined
+  return (enableMentions ? "" : "-") + Feature.Mentions
 }
 
 export const useOptionalMentionsFeature = () => {
@@ -98,7 +98,7 @@ export const useOptionalMentionsFeature = () => {
     inspector: "checkbox",
     initialValue: false
   })
-  return enableMentions ? Feature.Mentions : undefined
+  return (enableMentions ? "" : "-") + Feature.Mentions
 }
 
 export const usePollsFeature = () => {
@@ -108,7 +108,7 @@ export const usePollsFeature = () => {
     inspector: "checkbox",
     initialValue: true
   })
-  return enablePolls ? Feature.Polls : undefined
+  return (enablePolls ? "" : "-") + Feature.Polls
 }
 
 export const usePreviewsFeature = () => {
@@ -128,7 +128,7 @@ export const useReactionsFeature = () => {
     inspector: "checkbox",
     initialValue: true
   })
-  return enableReactions ? Feature.Reactions : undefined
+  return (enableReactions ? "" : "-") + Feature.Reactions
 }
 
 export const useCommentsFeature = () => {
@@ -138,7 +138,7 @@ export const useCommentsFeature = () => {
     inspector: "checkbox",
     initialValue: true
   })
-  return enableComments ? Feature.Comments : undefined
+  return (enableComments ? "" : "-") + Feature.Comments
 }
 
 export const useVersionsFeature = () => {
@@ -148,7 +148,7 @@ export const useVersionsFeature = () => {
     inspector: "checkbox",
     initialValue: true
   })
-  return enableVersions ? Feature.Versions : undefined
+  return (enableVersions ? "" : "-") + Feature.Versions
 }
 
 export const useWebDAVFeature = () => {
@@ -158,7 +158,7 @@ export const useWebDAVFeature = () => {
     inspector: "checkbox",
     initialValue: true
   })
-  return enableWebDAV ? Feature.WebDAV : undefined
+  return (enableWebDAV ? "" : "-") + Feature.WebDAV
 }
 
 export const useEmbedsFeature = () => {
@@ -168,7 +168,17 @@ export const useEmbedsFeature = () => {
     inspector: "checkbox",
     initialValue: true
   })
-  return enableEmbeds ? Feature.Embeds : undefined 
+  return (enableEmbeds ? "" : "-") + Feature.Embeds
+}
+
+export const useFollowFeature = () => {
+  const [enableFollow] = Retool.useStateBoolean({
+    name: 'enableFollow',
+    label: 'Follow',
+    inspector: "checkbox",
+    initialValue: true
+  })
+  return (enableFollow ? "" : "-") + Feature.Follow 
 }
 
 export const useReceiptsFeature = () => {
@@ -178,7 +188,7 @@ export const useReceiptsFeature = () => {
     inspector: "checkbox",
     initialValue: true
   })
-  return enableReceipts ? Feature.Receipts : undefined
+  return (enableReceipts ? "" : "-") + Feature.Receipts
 }
 
 export const useOptionalReceiptsFeature = () => {
@@ -188,7 +198,7 @@ export const useOptionalReceiptsFeature = () => {
     inspector: "checkbox",
     initialValue: false
   })
-  return enableReceipts ? Feature.Receipts : undefined
+  return (enableReceipts ? "" : "-") + Feature.Receipts
 }
 
 export const useTypingFeature = () => {
@@ -198,7 +208,7 @@ export const useTypingFeature = () => {
     inspector: "checkbox",
     initialValue: true
   })
-  return enableTyping ? Feature.Typing : undefined
+  return (enableTyping ? "" : "-") + Feature.Typing
 }
 
 export const useOptionalTypingFeature = () => {
@@ -208,7 +218,7 @@ export const useOptionalTypingFeature = () => {
     inspector: "checkbox",
     initialValue: false
   })
-  return enableTyping ? Feature.Typing : undefined
+  return (enableTyping ? "" : "-") + Feature.Typing
 }
 
 export const useContextDataFeature = () => {
@@ -218,7 +228,7 @@ export const useContextDataFeature = () => {
     inspector: "checkbox",
     initialValue: true
   })
-  return enableContextData ? Feature.ContextData : undefined
+  return (enableContextData ? "" : "-") + Feature.ContextData
 }
 
 export const useChatFeatures = () => {
@@ -227,6 +237,7 @@ export const useChatFeatures = () => {
     useCloudFilesFeature(),
     Feature.ContextData,
     useEmbedsFeature(),
+    useFollowFeature(),
     useGoogleMeetFeature(),
     useMicrosoftTeamsFeature(),
     useZoomMeetingsFeature(),
@@ -247,6 +258,7 @@ export const useCommentsFeatures = () => {
     useCloudFilesFeature(),
     Feature.ContextData,
     useEmbedsFeature(),
+    useFollowFeature(),
     useGoogleMeetFeature(),
     useMentionsFeature(),
     useMicrosoftTeamsFeature(),
@@ -280,6 +292,7 @@ export const useFilesFeatures = () => {
     useCloudFilesFeature(),
     Feature.ContextData,
     useEmbedsFeature(),
+    useFollowFeature(),
     useOptionalGoogleMeetFeature(),
     useMentionsFeature(),
     useOptionalMicrosoftTeamsFeature(),
@@ -301,6 +314,7 @@ export const usePostsFeatures = () => {
     useCloudFilesFeature(),
     Feature.ContextData,
     useEmbedsFeature(),
+    useFollowFeature(),
     useOptionalGoogleMeetFeature(),
     useMentionsFeature(),
     useOptionalMicrosoftTeamsFeature(),
@@ -321,6 +335,7 @@ export const useMessengerFeatures = () => {
     Feature.ContextData,
     useGoogleMeetFeature(),
     useEmbedsFeature(),
+    useFollowFeature(),
     useMentionsFeature(),
     useMicrosoftTeamsFeature(),
     usePollsFeature(),

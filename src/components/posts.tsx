@@ -1,6 +1,6 @@
 import React from 'react'
 import { type FC } from 'react'
-import { useWeavy, WyPosts } from '@weavy/uikit-react'
+import { useWeavy, WyFeed } from '@weavy/uikit-react'
 import {
   useTokenFactory,
   useWeavyOptions,
@@ -39,7 +39,7 @@ export const WeavyPosts: FC = () => {
   )
 
   return (
-    <WyPosts
+    <WyFeed
       uid={uid}
       name={name}
       contextualData={contextData || undefined}
